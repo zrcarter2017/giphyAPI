@@ -20,10 +20,23 @@ body {
 .header {
 	background-color:black;
 	color:white;
+	margin-bottom:20px;
 }
 
 
 
 .container-fluid {
 	padding:15px 0px 15px 0px;
+}
+
+.card {
+	padding-bottom: 5px;
+}
+
+.addComedian{
+	margin-bottom:15px;
+}
+
+.addedButton{
+	float:left;
 }
