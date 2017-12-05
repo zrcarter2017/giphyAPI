@@ -1,0 +1,29 @@
+html{
+	margin:0;
+	padding:0;
+	border:0;
+}
+
+body {
+	text-align:center;
+	margin:0;
+	padding:0;
+	border:0;
+	background-image:url(../img/cloth.png);
+}
+
+#title {
+	font-family: 'Gloria Hallelujah', cursive;
+	padding-bottom:5px;
+}
+
+.header {
+	background-color:black;
+	color:white;
+}
+
+
+
+.container-fluid {
+	padding:15px 0px 15px 0px;
+}
