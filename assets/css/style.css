@@ -37,6 +37,13 @@ body {
 	margin-bottom:15px;
 }
 
-.addedButton{
+.newButton{
 	float:left;
+	padding:10px;
+	margin:5px;
+	width:338px;
+}
+
+.card-title{
+	margin-top:10px;
 }

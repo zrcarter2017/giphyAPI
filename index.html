@@ -25,20 +25,23 @@
 			    	<h4 class="card-title">Find a Comedian</h4>
 			    	<p class="card-text">Add your favorite comedian to the list of giphys.</p>
 			    	<div class = "addComedian">
-			    	<input placeholder="ex. Kevin Hart"></input>
-			    	<a class="btn btn-primary">Add comedian</a>
+			    	<input id="comedian" type = "text" placeholder="ex. Kevin Hart" />
+			    	<a class="btn btn-primary newComedian">Add comedian</a>
 			    	</div>
-			    	<div class="addedButton">
-			    		<a class="btn btn-success">Will Ferrell</a>
-			    		<a class="btn btn-success">Will Ferrell</a>
-			    		<a class="btn btn-success">Will Ferrell</a>
-			    		<a class="btn btn-success">Will Ferrell</a>
+			    	<div id="buttons">
+			    		<!-- <a class="btn btn-success newButton">Will Ferrell</a>
+			    		<a class="btn btn-success newButton">Jack Black</a>
+			    		<a class="btn btn-success newButton">Adam Sandler</a>
+			    		<a class="btn btn-success newButton">Jim Carey</a> -->
 			    	</div>
 			  	</div>
 				</div>
 			</div>
 			<div class = "col-md-8">
-			<div class = "giphy">
+			<div id = "giphy">
+				<img src="https://media1.giphy.com/media/3o85xkQpyMlnBkpB9C/200_s.gif" data-still="https://media1.giphy.com/media/3o85xkQpyMlnBkpB9C/200_s.gif" data-animate="https://media1.giphy.com/media/3o85xkQpyMlnBkpB9C/200.gif" data-state="still" class="gif">
+  				<img src="https://media2.giphy.com/media/8rFQp4kHXJ0gU/200_s.gif" data-still="https://media2.giphy.com/media/8rFQp4kHXJ0gU/200_s.gif" data-animate="https://media2.giphy.com/media/8rFQp4kHXJ0gU/200.gif" data-state="still" class="gif">
+  				<img src="https://media3.giphy.com/media/W6LbnBigDe4ZG/200_s.gif" data-still="https://media3.giphy.com/media/W6LbnBigDe4ZG/200_s.gif" data-animate="https://media3.giphy.com/media/W6LbnBigDe4ZG/200.gif" data-state="still" class="gif">
 			</div>
 	
 			</div>
@@ -49,5 +52,89 @@
 	<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+		<script type="text/javascript">
+
+			//array of comedians
+			topics = ['will ferrell', 'jack black', 'adam sandler', 'jim carey'];
+
+
+			//create a button for all items in topic array
+			for (var i = 0; i < topics.length; i++) {
+				$('#buttons').append("<button class='btn btn-success newButton'" + "data-person=" + '"' + topics[i] + '"' + ">" + topics[i] + "</button>");
+				console.log(topics[i]);
+			}
+
+
+
+
+			// get input box
+			var comedian = document.getElementById('comedian');
+
+			//push user input to topics array and add a button
+
+			$('.newComedian').on("click", function() {
+				console.log(comedian.value);
+				topics.push(comedian.value.toLowerCase());
+				console.log(topics);
+				$('#buttons').prepend("<button class='btn btn-success newButton'" + "data-person=" + comedian.value.toLowerCase() + ">" + comedian.value + "</button>");
+				console.log(comedian.value.toLowerCase());
+			});
+
+
+
+			//display gifs when button is clicked
+
+		    $("button").on("click", function() {
+		    	event.preventDefault();
+		      var person = $(this).attr("data-person");
+		      console.log(person);
+		      var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
+		        person + "&api_key=dc6zaTOxFJmzC&limit=10";
+
+		      $.ajax({
+		          url: queryURL,
+		          method: "GET"
+		        })
+		        .done(function(response) {
+		          console.log(response);
+		          var results = response.data;
+
+		          for (var i = 0; i < 10; i++) {
+		            var gifDiv = $("<div class='item'>");
+
+		            var rating = results[i].rating;
+
+		            var p = $("<p>").text("Rating: " + rating);
+
+		            var comedianImage = $("<img>");
+		            comedianImage.attr("src", results[i].images.fixed_height.url);
+
+		            gifDiv.prepend(p);
+		            gifDiv.prepend(comedianImage);
+
+		            $("#giphy").prepend(gifDiv);
+		          }
+		        });
+		    });
+
+		    //pause and play gifs
+
+
+		  </script>
+
+
+
+
+
+
+
+
+
+
+
 </body>
 </html>
