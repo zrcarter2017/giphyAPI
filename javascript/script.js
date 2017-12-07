@@ -63,6 +63,7 @@
 		            gifDiv.prepend(comedianImage);
 
 		            $("#giphy").prepend(gifDiv);
+		            
 		          }
 		        });
 		    });
