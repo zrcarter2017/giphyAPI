@@ -46,13 +46,13 @@
 		          var results = response.data;
 
 		          for (var i = 0; i < results.length; i++) {
-		            var gifDiv = $("<div data-state='still'>");
+		            var gifDiv = $("<div>");
 
 		            var rating = results[i].rating;
 
 		            var p = $("<p>").text("Rating: " + rating);
 
-		            var comedianImage = $("<img class='item'>");
+		            var comedianImage = $("<img data-state='still' class='item'>");
 		            comedianImage.attr("src", results[i].images.fixed_height_still.url);
 		            stillGifs.push(results[i].images.fixed_height_still.url);
 		            animatedGifs.push(results[i].images.fixed_height.url);
@@ -77,7 +77,7 @@
 			        if (state == "still") {
 
 			          $(this).attr("data-state", "animate");
-			          $(this).attr("src", animatedGifs[0]);
+			          $(this).attr("src", animatedGifs[indexOf(gifDiv)]);
 			          console.log("this was still");
 			        }
 
@@ -85,7 +85,7 @@
 			      
 			        {
 			          $(this).attr("data-state", "still");
-			          $(this).attr("src", stillGifs[0]);
+			          $(this).attr("src", stillGifs[indexOf(gifDiv)]);
 			          console.log("this was animated");
 			        }
 
