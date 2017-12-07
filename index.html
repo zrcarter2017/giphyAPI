@@ -20,29 +20,26 @@
 		<div class="row">
 			<div class="col-md-4">
 				<div class="card">
-			  	<h4 class="card-header">Who makes you laugh?</h4>
-			  	<div class="card-body">
-			    	<h4 class="card-title">Find a Comedian</h4>
-			    	<p class="card-text">Add your favorite comedian to the list of giphys.</p>
-			    	<div class = "addComedian">
-			    	<input id="comedian" type = "text" placeholder="ex. Kevin Hart" />
-			    	<a class="btn btn-primary newComedian">Add comedian</a>
-			    	</div>
-			    	<div id="buttons">
-			    		<!-- <a class="btn btn-success newButton">Will Ferrell</a>
-			    		<a class="btn btn-success newButton">Jack Black</a>
-			    		<a class="btn btn-success newButton">Adam Sandler</a>
-			    		<a class="btn btn-success newButton">Jim Carey</a> -->
-			    	</div>
-			  	</div>
+				  	<h4 class="card-header">Who makes you laugh?</h4>
+				  	<div class="card-body">
+				    	<h4 class="card-title">Find a Comedian</h4>
+				    	<p class="card-text">Add your favorite comedian to the list of giphys.</p>
+					    	<div class = "addComedian">
+					    	<input id="comedian" type = "text" placeholder="ex. Kevin Hart" />
+					    	<a class="btn btn-primary newComedian">Add comedian</a>
+					    	</div>
+
+	<!-- 			    	This is where the buttons will go
+	 -->			    	<div id="buttons">
+				    		</div>
+				  	</div>
 				</div>
 			</div>
 			<div class = "col-md-8">
-			<div id = "giphy">
-				<img src="https://media1.giphy.com/media/3o85xkQpyMlnBkpB9C/200_s.gif" data-still="https://media1.giphy.com/media/3o85xkQpyMlnBkpB9C/200_s.gif" data-animate="https://media1.giphy.com/media/3o85xkQpyMlnBkpB9C/200.gif" data-state="still" class="gif">
-  				<img src="https://media2.giphy.com/media/8rFQp4kHXJ0gU/200_s.gif" data-still="https://media2.giphy.com/media/8rFQp4kHXJ0gU/200_s.gif" data-animate="https://media2.giphy.com/media/8rFQp4kHXJ0gU/200.gif" data-state="still" class="gif">
-  				<img src="https://media3.giphy.com/media/W6LbnBigDe4ZG/200_s.gif" data-still="https://media3.giphy.com/media/W6LbnBigDe4ZG/200_s.gif" data-animate="https://media3.giphy.com/media/W6LbnBigDe4ZG/200.gif" data-state="still" class="gif">
-			</div>
+<!-- 				This is where the giphys will go
+ -->			<div id = "giphy">
+
+				</div>
 	
 			</div>
 		</div>
@@ -80,20 +77,20 @@
 				console.log(comedian.value);
 				topics.push(comedian.value.toLowerCase());
 				console.log(topics);
-				$('#buttons').prepend("<button class='btn btn-success newButton'" + "data-person=" + comedian.value.toLowerCase() + ">" + comedian.value + "</button>");
+				$('#buttons').prepend("<button class='btn btn-success newButton'"  + "data-person=" + "'" + comedian.value.toLowerCase() +"'" + ">" + comedian.value + "</button>");
 				console.log(comedian.value.toLowerCase());
 			});
 
 
 
-			//display gifs when button is clicked
+			//add event listener for #buttons div, call ajax and display gifs when button is clicked
 
-		    $("button").on("click", function() {
+		    $("#buttons").on("click", ".newButton", function() {
 		    	event.preventDefault();
 		      var person = $(this).attr("data-person");
 		      console.log(person);
 		      var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
-		        person + "&api_key=dc6zaTOxFJmzC&limit=10";
+		        person + "&api_key=WrZVFEkjylZmt1AO1PyAmKS2uPtf4eLK&limit=10";
 
 		      $.ajax({
 		          url: queryURL,
@@ -103,8 +100,8 @@
 		          console.log(response);
 		          var results = response.data;
 
-		          for (var i = 0; i < 10; i++) {
-		            var gifDiv = $("<div class='item'>");
+		          for (var i = 0; i < results.length; i++) {
+		            var gifDiv = $("<div class='item' data-state='still'>");
 
 		            var rating = results[i].rating;
 
@@ -123,6 +120,27 @@
 
 		    //pause and play gifs
 
+		        $(".item").on("click", function() {
+		       
+			        var state = $(this).attr("data-state");
+			        
+			        if (state == "still") {
+
+			          $(this).attr("data-state", "animate");
+			          $(this).attr("src", "data-animate");
+			          console.log("this was still");
+			        }
+
+			        else
+			      
+			        {
+			          $(this).attr("data-state", "still");
+			          $(this).attr("src", $(this).attr("data-still"));
+			        }
+
+			        console.log(state);
+
+			    });
 
 		  </script>
 
