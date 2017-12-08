@@ -1,7 +1,6 @@
 			//array of comedians
 			topics = ['will ferrell', 'jack black', 'adam sandler', 'jim carey'];
-			animatedGifs = [];
-			stillGifs = [];
+
 
 
 			//create a button for all items in topic array
@@ -9,8 +8,6 @@
 				$('#buttons').append("<button class='btn btn-success newButton'" + "data-person=" + '"' + topics[i] + '"' + ">" + topics[i] + "</button>");
 				console.log(topics[i]);
 			}
-
-
 
 
 			// get input box
@@ -52,12 +49,13 @@
 
 		            var p = $("<p>").text("Rating: " + rating);
 
-		            var comedianImage = $("<img data-state='still' class='item'>");
+		            var comedianImage = $("<img data-animate=" + results[i].images.fixed_height.url 
+		            	+ " data-still=" + results[i].images.fixed_height_still.url 
+		            	+ " data-state='still' class='item'>");
 		            comedianImage.attr("src", results[i].images.fixed_height_still.url);
-		            stillGifs.push(results[i].images.fixed_height_still.url);
-		            animatedGifs.push(results[i].images.fixed_height.url);
-		            console.log("st " + stillGifs);
-		            console.log(animatedGifs);
+		            comedianImage.on("click", clickEventHandler);
+		            
+
 
 		            gifDiv.prepend(p);
 		            gifDiv.prepend(comedianImage);
@@ -67,31 +65,33 @@
 		          }
 		        });
 		    });
-		    console.log(animatedGifs);
-		    console.log(stillGifs);
+
 		    //pause and play gifs
 
-		        $(".item").on("click", function() {
+		     	var clickEventHandler = function() {
+
 		       
 			        var state = $(this).attr("data-state");
 			        
 			        if (state == "still") {
 
 			          $(this).attr("data-state", "animate");
-			          $(this).attr("src", animatedGifs[indexOf(gifDiv)]);
+			          $(this).attr("src", $(this).attr('data-animate'));
 			          console.log("this was still");
 			        }
 
 			        else
 			      
 			        {
+
+			          var d = $(this).attr('data-animate');
+			          console.log(d);
 			          $(this).attr("data-state", "still");
-			          $(this).attr("src", stillGifs[indexOf(gifDiv)]);
+			          $(this).attr("src", $(this).attr('data-still'));
 			          console.log("this was animated");
 			        }
 
-			        console.log(state);
-			        console.log(animatedGifs);
-			        console.log(stillGifs);
+			       
 
-			    });
+
+			    };
